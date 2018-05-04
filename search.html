@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        .active {
+            background: pink;
+        }
+        a{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<input type="text"/>
+<ul></ul>
+<script type="text/javascript">
+    function jsonp(json) {
+        if (!json.url) {
+            alert("没有");
+            return;
+        }
+        json.cbName = json.cbName || "cb";
+        json.data = json.data || {};
+        var fnName = "show" + Math.random();
+        fnName = fnName.replace(".", "");
+        window[fnName] = function (json1) {
+            json.success && json.success(json1.s);
+            document.querySelector("head").removeChild(script);
+        }
+        json.data[json.cbName] = fnName;
+        var arr = [];
+        for (var name in json.data) {
+            arr.push(name + "=" + json.data[name]);
+        }
+        var script = document.createElement("script");
+        script.src = json.url + "?" + arr.join("&")
+        document.querySelector("head").appendChild(script);
+    }
+
+    // window.onload = function () {
+
+        var inp = document.querySelector("input");
+        var oul = document.querySelector("ul");
+
+        inp.onkeyup = function (ev) {
+
+                var even = ev || even;
+                if (even.keyCode == 40 || even.keyCode == 38) return;
+            setInterval(function () {
+                jsonp({
+                    url: "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su",
+                    data: {
+                        wd: inp.value
+                    },
+                    success: function (json) {
+//							console.log(json);
+
+                        // oul.innerHTML = "";
+                        // for (var i = 0; i < json.length; i++) {
+                        //     var a = document.createElement("a");
+                        //     a.innerHTML = json[i];
+                        //     oul.appendChild(a);
+                        // }
+
+
+                        var html="";
+                        for(var i = 0; i < json.length; i++){
+                            html+='<li><a href="https://www.baidu.com/swd=+'+json[i]+'">'+json[i]+'</a></li>'
+                        }
+                        oul.innerHTML=html
+                        console.log(json)
+                    }
+                })
+                old = inp.value;
+            }, 5000)
+        }
+        var oli = oul.children;
+        var a = -1;
+        inp.onkeydown = function (ev) {
+            var even = ev || even;
+            //下键
+//					console.log(even.keyCode);
+            if (even.keyCode == 40) {
+                a++;
+                console.log(a);
+                if (a == oli.length) {
+                    a = -1;
+                }
+                for (var i = 0; i < oli.length; i++) {
+                    oli[i].className = "";
+                }
+                if (a == -1) {
+                    inp.value = old;
+                } else {
+                    inp.value = oli[a].innerHTML;
+                    oli[a].className = "active";
+                }
+                return false;
+            }
+            //上
+            if (even.keyCode == 38) {
+                a--;
+                if (a == -2) {
+                    a = oli.length - 1;
+                }
+                for (var i = 0; i < oli.length; i++) {
+                    oli[i].className = "";
+                }
+                if (a == -1) {
+                    inp.value = old;
+                } else {
+                    inp.value = oli[a].innerHTML;
+                    oli[a].className = "active";
+                }
+                return false;
+            }
+        }
+        // }
+    // var li = document.querySelector("li");
+    //     for(var i=0;i<li.length;i++){
+    //         li[i].onclick=function () {
+    //             alert(124)
+    //         }
+    //     }
+    // }
+</script>
+</body>
+</html>

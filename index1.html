@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+
+		<title></title>
+		<style type="text/css">
+			* {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+			}
+
+			input {
+				width: 400px;
+				height: 40px;
+			}
+
+			li {
+				line-height: 20px;
+			}
+
+			.active {
+				background: pink;
+			}
+		</style>
+	</head>
+
+	<body>
+		<input type="text" />
+		<ul></ul>
+
+		<script type="text/javascript">
+			var inp = document.querySelector("input");
+			var oul = document.querySelector("ul");
+			function find(data) {
+				var nr = data.s;
+//				console.log(nr)
+				oul.innerHTML = "";
+				for(var i = 0; i < nr.length; i++) {
+					oul.innerHTML += "<li>" + nr[i] + "</li>";
+				}
+				var li = document.querySelectorAll("li");
+//				console.log(li)
+				for(var i = 0; i < li.length; i++) {
+					li[i].onmouseover = function() {
+						this.className = "active";
+					}
+					li[i].onmouseleave = function() {
+						this.className = "";
+					}
+					li[i].onclick=function(){
+						inp.value=this.innerHTML;
+					}
+					var count=-1;
+					document.onkeydown=function(e){
+						var e=event||window.event;
+						var key=e.keyCode;
+						var oli=oul.children;
+						if(key=40){
+							count++;
+//							for(var i=0;i<nr.length;i++){
+//								li[i].className=""
+//							}
+							oli[i].className="active"
+						}
+					}
+				}
+			}
+			inp.onkeyup = function(even) {
+				var even=event||window.event;
+				var script = document.createElement("script");
+				script.src = "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=" + inp.value + "&cb=find";
+				document.head.appendChild(script);
+				if(even.keyCode==40){
+					return;
+				}
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="text" id="txt">
+<ul id="ul"></ul>
+</body>
+<script>
+    window.onload = function () {
+        var script = document.createElement("script");
+        script.src = "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=" + inp.value + "&cb=find";
+        document.head.appendChild(script);
+        var inp = document.querySelector('#txt');
+        var oul = document.querySelector('#ul');
+        // var xhr=new XMLHttpRequest();
+        // xhr.open('get',"https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su");
+        // xhr.send();
+        // xhr.onreadystatechange=function (data) {
+        //     if(xhr.readyState==4&&status==200){
+        //
+        //         console.log(data)
+        //     }
+        // }
+
+
+        // inp.onkeyup = function (ev) {
+        //     var even = event || window.event;
+        //
+        // }
+    }
+</script>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>	
+	<body>
+		<input type="text" />
+		<ul>
+			<li>mijionc</li>
+		</ul>
+	</body>
+	<script type="text/javascript">
+		function jsonp(json){
+			json=json||{};
+			if(!json.url){  //判断有没有
+				alert("没有");
+				return;
+			}
+			json.cbName=json.cbName||"cb";  //cbName =用户输入的或者默认为cb
+			json.data=json.data||{};        //json.data为用户输入的 或者为空
+			var fnName="show"+Math.random();//为了防止函数名重复 在函数名后加随机数
+			fnName=fnName.replace(".","");  //去掉随机数的小数点
+			window[fnName]=function(json1){ //.不能操作变量 []能操作变量
+				json.success&&json.success(json1.s);//相当于
+					//if(json.success){
+					//json.success(json1.s)
+					//}
+					//onsole.log(json1.s)
+				//删除script标签
+				document.getElementsByTagName("head")[0].removeChild(script);
+			}
+			//将fnName添加到json.cbName中
+			json.data[json.cbName]=fnName;
+			//定义空数组
+			var arr=[];
+			//遍历json.data 添加到空数组中   拼接成"wd=a&cb="
+			for(var name in json.data){
+				arr.push(name+"="+json.data[name]);
+			}
+			var script=document.createElement("script");
+			script.src=json.url+"?"+arr.join("&");
+			document.getElementsByTagName("head")[0].appendChild(script);
+			
+			
+		}
+		window.onload=function(){
+			var inp=document.getElementsByTagName("input")[0];
+			inp.onkeyup=function(data){
+//				var script=document.createElement("script");
+//				script.src="https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=a&cb=show";
+//				document.getElementsByTagName("head")[0].appendChild(script);
+				alert("a");
+				jsonp({
+					url:"https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su",
+					data:{
+						wd:inp.value
+					},
+					success:function(json){
+						console.log(json);
+					},
+					cbName:"cb"
+				})
+			}
+		}
+	</script>
+</html>
+<!--https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=a&cb=show-->

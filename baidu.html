@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<script src="jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<title>Document</title>
+	</head>
+
+	<body>
+		view plaincopy to clipboardprint?
+		<div class="search">
+			<span><input id="search_text" class="search_text" onblur="if (value ==''){value='搜微博、找人'}" onfocus="if (value =='搜微博、找人'){value =''}" oninput="SearchInput(this);" onPropertyChange="SearchInput(this);"  type="text" /></span><span><input class="search_button" id="btnSearch" onclick="Search();" type="button" /></span>
+			<!--搜索弹出框 start-->
+			<div class="search_boder_z" id="search_show">
+				<li class="title"> 请选择搜索范围</li>
+				<li style="background:#E8F4FC;" class="microblog"><span>包含<cite>xXx</cite>的广播</span></li>
+				<li class="account" style=""><span>包含<cite>xXx</cite>的人</span></li>
+				<li class="group"><span>包含<cite>xXx</cite>的社团</span></li>
+			</div>
+			<!--搜索弹出框 end-->
+		</div>
+		<script type="text/javascript">
+			view plaincopy to clipboardprint ?
+				var index = 1; //当前li   
+			var search_show = $(".search");
+			var type = 'microblog'; //当前搜索类型   
+
+			$("#search_text").keydown(function(event) { //上下键获取焦点   
+				var key = event.keyCode;
+				if(key == 13) Search(); /*回车搜索*/
+
+				if($.trim($(this).val()).length == 0)
+					return;
+
+				search_show.show();
+
+				if(key == 38) { /*向上按钮*/
+					index--;
+					if(index == 0) index = 4; //到顶了，   
+				} else if(key == 40) { /*向下按钮*/
+					index++;
+					if(index == 5) index = 1; //到底了   
+				}
+				var li = search_show.find("li:eq(" + index + ")");
+
+				li.css("background", "#E8F4FC").siblings().css("background", "");
+				type = li.attr("class");
+			});
+		</script>
+	</body>
+
+</html>

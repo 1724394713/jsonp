@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<input type="text" />
+		<script type="text/javascript">
+			window.onload=function(){
+				var inp=document.querySelector("input")
+				inp.onkeyup = function(data) {
+					//防止函数名一样 在后面加随机数
+					var fnName="show"+Math.random(); //[0-1)
+					fnName=fnName.replace(".","");
+					window[fnName]=function(){
+						console.log(fnName)
+					}
+					var script = document.createElement("script");
+					script.src = "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=" + inp.value + "&cb="+fnName;
+					document.head.appendChild(script);
+				}
+			}
+		</script>
+	</body>
+</html>
